@@ -9,6 +9,7 @@ r"""
 """
 import logging
 from .utils import FONT
+from typing import Literal, Union
 import sys
 
 
@@ -95,7 +96,13 @@ class ColoredFormatter(logging.Formatter, FONT):
         return f"{self.__get_colored_str(record.levelno, message_header)}:{messages[1]}"
 
 
-class SwanLog:
+Levels = Union[Literal["debug", "info", "warning", "error", "critical"], str]
+"""
+SwanKitLog 预先定义好的日志等级
+"""
+
+
+class SwanKitLog:
     # 日志系统支持的输出等级
     levels = {
         "debug": logging.DEBUG,
@@ -105,14 +112,19 @@ class SwanLog:
         "critical": logging.CRITICAL,
     }
 
-    def __init__(self, name=__name__.lower(), level="info"):
+    def __init__(self, name=__name__.lower(), level: Levels = "info"):
+        """
+
+        :param name:
+        :param level:
+        """
         super().__init__()
         self.prefix = name + ':'
         self.__logger = logging.getLogger(name)
         self.__original_level = self.__get_level(level)
         self.__installed = False
         self.__logger.setLevel(self.__original_level)
-        # 初始化控制台日志处理器
+        # 初始化控制台日志处理器，输出到标准输出流
         self.__handler = logging.StreamHandler(sys.stdout)
         # 添加颜色格式化，并在此处设置格式化后的输出流是否可以被其他处理器处理
         colored_formatter = ColoredFormatter("%(name)s: %(message)s")
@@ -128,7 +140,7 @@ class SwanLog:
     def enable_log(self):
         self.__logger.addHandler(self.__handler)
 
-    def set_level(self, level):
+    def set_level(self, level: Levels):
         """
         Set the logging level of the logger.
 
@@ -143,7 +155,7 @@ class SwanLog:
         """
         self.__logger.setLevel(self.__get_level(level))
 
-    def __get_level(self, level):
+    def __get_level(self, level: Levels):
         """私有属性，获取等级对应的 logging 对象
 
         Parameters

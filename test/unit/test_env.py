@@ -7,10 +7,9 @@ r"""
 @Description:
     测试环境变量
 """
-import pytest
-
 from swankit import env as E
 from tutils import TEMP_DIR
+import pytest
 import shutil
 import nanoid
 import os
