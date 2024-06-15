@@ -11,6 +11,7 @@ r"""
 from typing import Callable
 from abc import ABC, abstractmethod
 from .models import *
+from swankit.core import SwanLabSharedSettings
 
 
 class SwanKitCallback(ABC):
@@ -26,6 +27,13 @@ class SwanKitCallback(ABC):
         :param proj_name: str, 项目名称
         :param workspace: str, 工作空间
         :param kwargs: dict, 其他参数，为了增加灵活性，可以在on_init的时候设置一些其他类内参数
+        """
+        pass
+
+    def before_run(self, settings: SwanLabSharedSettings):
+        """
+        在运行实验之前调用
+        :param settings: SwanLabSharedSettings, 运行时的共享配置
         """
         pass
 
