@@ -102,7 +102,7 @@ SwanKitLog 预先定义好的日志等级
 """
 
 
-class SwanKitLog:
+class SwanLabSharedLog:
     # 日志系统支持的输出等级
     levels = {
         "debug": logging.DEBUG,

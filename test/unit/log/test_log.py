@@ -7,7 +7,7 @@ r"""
 @Description:
     测试日志模块
 """
-from swankit.log import SwanKitLog
+from swankit.log import SwanLabSharedLog
 import nanoid
 
 
@@ -24,7 +24,7 @@ class TestSwanKitLog:
         for level in levels:
             name = nanoid.generate()
             text = nanoid.generate()
-            t = SwanKitLog(name, level=level)
+            t = SwanLabSharedLog(name, level=level)
             for le in levels:
                 getattr(t, le)(text)
                 out, err = capsys.readouterr()
@@ -44,7 +44,7 @@ class TestSwanKitLog:
         for level in levels:
             name = nanoid.generate()
             text = nanoid.generate()
-            t = SwanKitLog(name, level=level)
+            t = SwanLabSharedLog(name, level=level)
             t.disable_log()
             for le in levels:
                 getattr(t, le)(text)
@@ -60,7 +60,7 @@ class TestSwanKitLog:
         for le in levels:
             name = nanoid.generate()
             text = nanoid.generate()
-            t = SwanKitLog(name, level="debug")
+            t = SwanLabSharedLog(name, level="debug")
             t.set_level(le)
             getattr(t, le)(text)
             out, err = capsys.readouterr()
