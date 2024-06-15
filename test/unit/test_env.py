@@ -37,7 +37,7 @@ class TestGetFolder:
         设置了一个绝对路径的环境变量
         """
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
-        os.environ[E.SwanLabEnv.SAVE_FOLDER.value] = path
+        os.environ[E.SwanKitEnv.SAVE_FOLDER.value] = path
         assert not os.path.exists(path)
         assert E.get_swanlab_save_folder() == path
         assert os.path.exists(path)
@@ -48,7 +48,7 @@ class TestGetFolder:
         """
         abs_path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
         rel_path = os.path.relpath(abs_path.__str__(), os.getcwd())
-        os.environ[E.SwanLabEnv.SAVE_FOLDER.value] = rel_path
+        os.environ[E.SwanKitEnv.SAVE_FOLDER.value] = rel_path
         assert not os.path.exists(abs_path)
         assert E.get_swanlab_save_folder() == abs_path
         assert os.path.exists(abs_path)
@@ -58,7 +58,7 @@ class TestGetFolder:
         父目录不存在
         """
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10), "a")
-        os.environ[E.SwanLabEnv.SAVE_FOLDER.value] = path
+        os.environ[E.SwanKitEnv.SAVE_FOLDER.value] = path
         assert not os.path.exists(path)
         with pytest.raises(FileNotFoundError):
             E.get_swanlab_save_folder()
@@ -70,7 +70,7 @@ class TestGetFolder:
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
         with open(path, "w") as f:
             f.write("test")
-        os.environ[E.SwanLabEnv.SAVE_FOLDER.value] = path
+        os.environ[E.SwanKitEnv.SAVE_FOLDER.value] = path
         assert os.path.exists(path)
         with pytest.raises(NotADirectoryError):
             E.get_swanlab_save_folder()

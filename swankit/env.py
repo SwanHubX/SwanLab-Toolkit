@@ -13,7 +13,7 @@ from .error import UnKnownSystemError
 from enum import Enum
 
 
-class SwanLabEnv(Enum):
+class SwanKitEnv(Enum):
     """
     环境变量Key，枚举类
     """
@@ -50,7 +50,7 @@ def get_swanlab_save_folder() -> str:
         :raise NotADirectoryError: folder不是一个文件夹
     :return: swanlab全局文件夹保存的路径，返回处理后的绝对路径
     """
-    folder = os.getenv(SwanLabEnv.SAVE_FOLDER.value)
+    folder = os.getenv(SwanKitEnv.SAVE_FOLDER.value)
     if folder is None:
         folder = os.path.join(os.path.expanduser("~"), ".swanlab")
     folder = os.path.abspath(folder)
