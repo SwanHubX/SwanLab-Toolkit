@@ -7,8 +7,8 @@ r"""
 @Description:
     数据处理模型
 """
-from abc import ABC, abstractmethod
 from typing import List, Dict, Optional, ByteString, Union, Tuple
+from abc import ABC, abstractmethod
 from enum import Enum
 from io import BytesIO
 import hashlib
@@ -283,3 +283,37 @@ class ParseResult:
         if not len(value):
             raise ValueError("Expected list(str) with at least one element")
         self.__data = value
+
+
+class ParseErrorInfo:
+    """
+    数据解析的错误信息
+    """
+
+    def __init__(
+            self,
+            expected: Optional[str],
+            got: Optional[str],
+            chart: Optional[BaseType.Chart],
+            duplicated: bool = False
+    ):
+        """
+        :param expected: 期望的数据类型
+        :param got: 实际的数据类型
+        :param chart: 当前错误数据对应的图表类型
+        :param duplicated: 是否是重复错误,如果为是，expected和got和chart都为None
+        """
+        self.expected = expected if not duplicated else None
+        self.got = got if not duplicated else None
+        self.chart = chart if not duplicated else None
+        self.__duplicated = duplicated
+
+    def dict(self):
+        return {"expected": self.expected, "got": self.got}
+
+    @property
+    def duplicated(self) -> bool:
+        """
+        是否是重复错误，重复错误时，got和expected为None
+        """
+        return self.__duplicated
