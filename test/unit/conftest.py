@@ -9,7 +9,7 @@ r"""
 """
 import pytest
 from tutils import TEMP_DIR
-from swankit.env import SwanKitEnv
+from swankit.env import SwanLabSharedEnv
 import shutil
 import os
 
@@ -21,7 +21,7 @@ def setup_before_each():
         shutil.rmtree(TEMP_DIR)
     os.mkdir(TEMP_DIR)
     # ---------------------------------- 每个函数执行前，清空环境变量 ----------------------------------
-    for key in SwanKitEnv:
+    for key in SwanLabSharedEnv:
         if key.value in os.environ:
             del os.environ[key.value]
     yield

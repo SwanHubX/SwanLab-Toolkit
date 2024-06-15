@@ -13,14 +13,32 @@ from .error import UnKnownSystemError
 from enum import Enum
 
 
-class SwanKitEnv(Enum):
+class SwanLabMode(Enum):
     """
-    环境变量Key，枚举类
+    swanlab的解析模式，枚举类
+    """
+    DISABLED = "disabled"
+    CLOUD = "cloud"
+    # CLOUD_ONLY = "cloud-only"
+    LOCAL = "local"
+
+
+class SwanLabSharedEnv(Enum):
+    """
+    环境变量Key，枚举类，这些环境变量是swanlab全局共用的环境变量
     """
 
-    SWANLAB_FOLDER = "SWANLAB_SAVE_FOLDER"
+    SWANLAB_FOLDER = "SWANLAB_SAVE_DIR"
     """
     swanlab全局文件夹保存的路径，默认为用户主目录下的.swanlab文件夹
+    """
+    SWANLOG_FOLDER = "SWANLAB_LOG_DIR"
+    """
+    swanlab解析日志文件保存的路径，默认为当前运行目录的swanlog文件夹
+    """
+    SWANLAB_MODE = "SWANLAB_MODE"
+    """
+    swanlab的解析模式，涉及操作员注册的回调，目前有三种：local、cloud、disabled，默认为cloud
     """
 
 
@@ -40,7 +58,7 @@ def is_windows() -> bool:
     raise UnKnownSystemError("Unknown system, not windows or unix-like system")
 
 
-def get_swanlab_save_folder() -> str:
+def get_save_dir() -> str:
     """
     获取存放swanlab全局文件的文件夹路径，如果不存在就创建
     此函数对应为SWANLAB_SAVE_FOLDER全局变量，如果没有设置，默认为用户主目录下的.swanlab文件夹
@@ -50,7 +68,7 @@ def get_swanlab_save_folder() -> str:
         :raise NotADirectoryError: folder不是一个文件夹
     :return: swanlab全局文件夹保存的路径，返回处理后的绝对路径
     """
-    folder = os.getenv(SwanKitEnv.SWANLAB_FOLDER.value)
+    folder = os.getenv(SwanLabSharedEnv.SWANLAB_FOLDER.value)
     if folder is None:
         folder = os.path.join(os.path.expanduser("~"), ".swanlab")
     folder = os.path.abspath(folder)
@@ -62,3 +80,40 @@ def get_swanlab_save_folder() -> str:
     if not os.path.isdir(folder):
         raise NotADirectoryError(f"{folder} is not a directory")
     return folder
+
+
+def get_swanlog_dir() -> str:
+    """
+    获取存放swanlog日志文件的文件夹路径，如果不存在就创建
+    此函数对应为SWANLAB_LOG_FOLDER全局变量，如果没有设置，默认为当前运行目录下的swanlog文件夹
+    需要注意，此函数并不会保证文件夹的存在，但是会检查父文件夹是否存在以及folder是否是一个文件夹
+    :raises
+        :raise FileNotFoundError: folder的父目录不存在
+        :raise NotADirectoryError: folder不是一个文件夹
+    :return: swanlog日志文件保存的路径，返回处理后的绝对路径
+    """
+    folder = os.getenv(SwanLabSharedEnv.SWANLOG_FOLDER.value)
+    if folder is None:
+        folder = os.path.join(os.getcwd(), "swanlog")
+    folder = os.path.abspath(folder)
+    if not os.path.exists(os.path.dirname(folder)):
+        raise FileNotFoundError(f"{os.path.dirname(folder)} not found")
+    if not os.path.exists(folder):
+        return folder
+    if not os.path.isdir(folder):
+        raise NotADirectoryError(f"{folder} is not a directory")
+    return folder
+
+
+def get_mode() -> str:
+    """
+    获取当前的swanlab解析模式，如果没有设置，默认为cloud
+    :raise ValueError: 未知的swanlab模式
+    :return: swanlab的解析模式
+    """
+    mode = os.getenv(SwanLabSharedEnv.SWANLAB_MODE.value)
+    if mode is None:
+        mode = SwanLabMode.CLOUD.value
+    if mode not in SwanLabMode.__members__:
+        raise ValueError(f"Unknown swanlab mode: {mode}")
+    return mode

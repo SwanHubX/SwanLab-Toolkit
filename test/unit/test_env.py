@@ -29,7 +29,7 @@ class TestGetFolder:
         folder = os.path.join(home, ".swanlab")
         if os.path.exists(folder):
             shutil.rmtree(folder)
-        assert E.get_swanlab_save_folder() == folder
+        assert E.get_save_dir() == folder
         assert os.path.exists(folder)
 
     def test_env_abs(self):
@@ -37,9 +37,9 @@ class TestGetFolder:
         设置了一个绝对路径的环境变量
         """
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
-        os.environ[E.SwanKitEnv.SWANLAB_FOLDER.value] = path
+        os.environ[E.SwanLabSharedEnv.SWANLAB_FOLDER.value] = path
         assert not os.path.exists(path)
-        assert E.get_swanlab_save_folder() == path
+        assert E.get_save_dir() == path
         assert os.path.exists(path)
 
     def test_env_rel(self):
@@ -48,9 +48,9 @@ class TestGetFolder:
         """
         abs_path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
         rel_path = os.path.relpath(abs_path.__str__(), os.getcwd())
-        os.environ[E.SwanKitEnv.SWANLAB_FOLDER.value] = rel_path
+        os.environ[E.SwanLabSharedEnv.SWANLAB_FOLDER.value] = rel_path
         assert not os.path.exists(abs_path)
-        assert E.get_swanlab_save_folder() == abs_path
+        assert E.get_save_dir() == abs_path
         assert os.path.exists(abs_path)
 
     def test_env_parent_not_exist(self):
@@ -58,10 +58,10 @@ class TestGetFolder:
         父目录不存在
         """
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10), "a")
-        os.environ[E.SwanKitEnv.SWANLAB_FOLDER.value] = path
+        os.environ[E.SwanLabSharedEnv.SWANLAB_FOLDER.value] = path
         assert not os.path.exists(path)
         with pytest.raises(FileNotFoundError):
-            E.get_swanlab_save_folder()
+            E.get_save_dir()
 
     def test_env_not_a_folder(self):
         """
@@ -70,7 +70,7 @@ class TestGetFolder:
         path = os.path.join(TEMP_DIR, nanoid.generate("1234567890abcdef", 10))
         with open(path, "w") as f:
             f.write("test")
-        os.environ[E.SwanKitEnv.SWANLAB_FOLDER.value] = path
+        os.environ[E.SwanLabSharedEnv.SWANLAB_FOLDER.value] = path
         assert os.path.exists(path)
         with pytest.raises(NotADirectoryError):
-            E.get_swanlab_save_folder()
+            E.get_save_dir()
