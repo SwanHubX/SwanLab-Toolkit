@@ -9,8 +9,8 @@ r"""
 """
 import os
 import sys
-from .error import UnKnownSystemError
 from enum import Enum
+from typing import List
 
 
 class SwanLabMode(Enum):
@@ -21,6 +21,14 @@ class SwanLabMode(Enum):
     CLOUD = "cloud"
     # CLOUD_ONLY = "cloud-only"
     LOCAL = "local"
+
+    @classmethod
+    def list(cls) -> List[str]:
+        """
+        获取所有的枚举值
+        :return: 所有的枚举值
+        """
+        return [item.value for item in cls]
 
 
 class SwanLabSharedEnv(Enum):
@@ -39,7 +47,16 @@ class SwanLabSharedEnv(Enum):
     SWANLAB_MODE = "SWANLAB_MODE"
     """
     swanlab的解析模式，涉及操作员注册的回调，目前有三种：local、cloud、disabled，默认为cloud
+    大小写不敏感
     """
+
+    @classmethod
+    def list(cls) -> List[str]:
+        """
+        获取所有的枚举值
+        :return: 所有的枚举值
+        """
+        return [item.value for item in cls]
 
 
 # ---------------------------------- 获取环境变量/配置的值 ----------------------------------
@@ -48,14 +65,14 @@ class SwanLabSharedEnv(Enum):
 def is_windows() -> bool:
     """判断当前操作系统是否是windows还是类unix系统，主要是路径分隔上的差别
     此外的系统会报错为 UnKnownSystemError
-    :raise UnKnownSystemError: 未知系统错误，此时swanlab运行在未知系统上，这个系统不是windows或者类unix系统
+    :raise OSError: 未知系统错误，此时swanlab运行在未知系统上，这个系统不是windows或者类unix系统
     :return: True表示是windows系统，False表示是类unix系统
     """
     if sys.platform.startswith("win"):
         return True
     elif sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
         return False
-    raise UnKnownSystemError("Unknown system, not windows or unix-like system")
+    raise OSError("Unknown system, not windows or unix-like system")
 
 
 def get_save_dir() -> str:
@@ -114,6 +131,7 @@ def get_mode() -> str:
     mode = os.getenv(SwanLabSharedEnv.SWANLAB_MODE.value)
     if mode is None:
         mode = SwanLabMode.CLOUD.value
-    if mode not in SwanLabMode.__members__:
+    mode = mode.lower()
+    if mode not in SwanLabMode.list():
         raise ValueError(f"Unknown swanlab mode: {mode}")
     return mode

@@ -8,6 +8,6 @@ r"""
     日志模块，提供swanlab标准日志记录功能
 """
 from .utils import FONT
-from .log import SwanKitLog, Levels
+from .log import SwanLabSharedLog, Levels
 
-__all__ = ["FONT", "SwanKitLog", "Levels"]
+__all__ = ["FONT", "SwanLabSharedLog", "Levels"]
