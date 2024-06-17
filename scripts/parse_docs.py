@@ -14,14 +14,14 @@ import argparse
 
 def parse(raw):
     # 定义正则表达式来匹配以 /docs 开头的链接
-    pattern = re.compile(r'\[(.*?)]\((/docs/.*?\.md)\)')
+    pattern = re.compile(r'\[(.*?)]\((/docs/wiki/.*?\.md)\)')
 
     # 使用正则表达式替换匹配的链接
     def replace_link(match):
         text = match.group(1)
         link = match.group(2)
         # 删除 /docs 和 .md 后缀
-        new_link = link.replace('/docs', '').replace('.md', '')
+        new_link = link.replace('/docs/wiki', '.').replace('.md', '')
         return f'[{text}]({new_link})'
 
     # 替换所有匹配的链接
