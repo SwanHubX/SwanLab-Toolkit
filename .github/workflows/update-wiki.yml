@@ -5,7 +5,7 @@ on:
     #    paths:
     #      - docs/**
     branches:
-      - main
+      - action/wiki
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }} # This is the repository secret
   USER_NAME: wiki-bot
