@@ -101,7 +101,7 @@ def get_save_dir() -> str:
 
 def get_swanlog_dir() -> str:
     """
-    获取存放swanlog日志文件的文件夹路径，如果不存在就创建
+    获取存放swanlog日志文件的文件夹路径
     此函数对应为SWANLAB_LOG_FOLDER全局变量，如果没有设置，默认为当前运行目录下的swanlog文件夹
     需要注意，此函数并不会保证文件夹的存在，但是会检查父文件夹是否存在以及folder是否是一个文件夹
     :raises
