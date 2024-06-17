@@ -21,6 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+
+      - name: Run parser
+        run: |
+          python3 scripts/parse_docs.py docs/
+
       # 1. Create folder named `tmp_wiki`
       # 2. Initialize Git
       # 3. Pull old Wiki content
