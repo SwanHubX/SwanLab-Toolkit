@@ -2,10 +2,10 @@ name: Update Wiki
 
 on:
   push:
-    #    paths:
-    #      - docs/**
+    paths:
+      - docs/**
     branches:
-      - action/wiki
+      - main
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }} # This is the repository secret
   USER_NAME: wiki-bot
