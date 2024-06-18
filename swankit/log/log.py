@@ -121,7 +121,6 @@ class SwanLabSharedLog:
         super().__init__()
         self.prefix = name + ':'
         self.__logger = logging.getLogger(name)
-        self.__installed = False
         self.level = level
         # 初始化控制台日志处理器，输出到标准输出流
         self.__handler = logging.StreamHandler(sys.stdout)
