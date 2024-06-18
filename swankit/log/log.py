@@ -31,12 +31,13 @@ class SwanLabSharedLog:
     def __init__(self, name=__name__.lower(), level: Levels = "info", file=None):
         self.__file = file if file else sys.stdout
         self.__level: int = 0
+        # 粗体
         self.__prefix_dict = {
-            "debug": FONT.grey(name) + ":",
-            "info": FONT.blue(name) + ":",
-            "warning": FONT.yellow(name) + ":",
-            "error": FONT.red(name) + ":",
-            "critical": FONT.bold(FONT.red(name)) + ":",
+            "debug": FONT.bold(FONT.grey(name)) + ":",
+            "info": FONT.bold(FONT.blue(name)) + ":",
+            "warning": FONT.bold(FONT.yellow(name)) + ":",
+            "error": FONT.bold(FONT.red(name)) + ":",
+            "critical": FONT.bold(FONT.bold(FONT.red(name))) + ":",
         }
         self.__levels_dict = {
             "debug": DEBUG,
