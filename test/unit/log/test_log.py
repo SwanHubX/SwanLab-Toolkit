@@ -61,7 +61,7 @@ class TestSwanKitLog:
             name = nanoid.generate()
             text = nanoid.generate()
             t = SwanLabSharedLog(name, level="debug")
-            t.set_level(le)
+            t.level = le
             getattr(t, le)(text)
             out, err = capsys.readouterr()
             assert text in out
