@@ -169,29 +169,29 @@ class SwanLabSharedLog:
     # 发送调试消息
     @concat_messages
     def debug(self, message):
-        self.debug(message)
+        self.__logger.debug(message)
         return
 
     # 发送通知
     @concat_messages
     def info(self, message):
-        self.info(message)
+        self.__logger.info(message)
         return
 
     # 发生警告
     @concat_messages
     def warning(self, message):
-        self.warning(message)
+        self.__logger.warning(message)
         return
 
     # 发生错误
     @concat_messages
     def error(self, message):
-        self.error(message)
+        self.__logger.error(message)
         return
 
     # 致命错误
     @concat_messages
     def critical(self, message):
-        self.critical(message)
+        self.__logger.critical(message)
         return
