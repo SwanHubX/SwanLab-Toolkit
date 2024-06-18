@@ -102,6 +102,20 @@ SwanKitLog 预先定义好的日志等级
 """
 
 
+def concat_messages(func):
+    """
+    装饰器，当传递打印信息有多个时，拼接为一个，并且拦截记录它们
+    """
+
+    def wrapper(self, *args, **kwargs):
+        # 拼接消息，首先将所有参数转换为字符串，然后拼接
+        args = [str(arg) for arg in args]
+        message = " ".join(args)
+        func(self, message, **kwargs)
+
+    return wrapper
+
+
 class SwanLabSharedLog:
     # 日志系统支持的输出等级
     levels = {
@@ -113,12 +127,6 @@ class SwanLabSharedLog:
     }
 
     def __init__(self, name=__name__.lower(), level: Levels = "info"):
-        """
-
-        :param name:
-        :param level:
-        """
-        super().__init__()
         self.prefix = name + ':'
         self.__logger = logging.getLogger(name)
         self.level = level
@@ -158,22 +166,32 @@ class SwanLabSharedLog:
         """
         self.__logger.setLevel(self.levels.get(level.lower()))
 
-    def debug(self, message: str):
-        self.__logger.debug(message)
+    # 发送调试消息
+    @concat_messages
+    def debug(self, message):
+        self.debug(message)
         return
 
-    def info(self, message: str):
-        self.__logger.info(message)
+    # 发送通知
+    @concat_messages
+    def info(self, message):
+        self.info(message)
         return
 
-    def warning(self, message: str):
-        self.__logger.warning(message)
+    # 发生警告
+    @concat_messages
+    def warning(self, message):
+        self.warning(message)
         return
 
-    def error(self, message: str):
-        self.__logger.error(message)
+    # 发生错误
+    @concat_messages
+    def error(self, message):
+        self.error(message)
         return
 
-    def critical(self, message: str):
-        self.__logger.critical(message)
+    # 致命错误
+    @concat_messages
+    def critical(self, message):
+        self.critical(message)
         return
