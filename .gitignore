@@ -2,6 +2,7 @@
 venv/
 test/temp/
 dist/
-__pycache__
+__pycache__/
 .pytest_cache/
+playground/
 .DS_Store
