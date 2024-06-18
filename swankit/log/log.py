@@ -121,7 +121,7 @@ class SwanLabSharedLog:
         super().__init__()
         self.prefix = name + ':'
         self.__logger = logging.getLogger(name)
-        self.__original_level = self.__get_level(level)
+        self.__original_level = self.get_level(level)
         self.__installed = False
         self.__logger.setLevel(self.__original_level)
         # 初始化控制台日志处理器，输出到标准输出流
@@ -153,10 +153,10 @@ class SwanLabSharedLog:
 
         :raises: KeyError: If an invalid level is passed.
         """
-        self.__logger.setLevel(self.__get_level(level))
+        self.__logger.setLevel(self.get_level(level))
 
-    def __get_level(self, level: Levels):
-        """私有属性，获取等级对应的 logging 对象
+    def get_level(self, level: Levels) -> int:
+        """获取等级字符串对应的等级值，用于比较日志等级
 
         Parameters
         ----------
