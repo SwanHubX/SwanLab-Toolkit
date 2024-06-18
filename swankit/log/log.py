@@ -121,9 +121,8 @@ class SwanLabSharedLog:
         super().__init__()
         self.prefix = name + ':'
         self.__logger = logging.getLogger(name)
-        self.__original_level = self.get_level(level)
         self.__installed = False
-        self.__logger.setLevel(self.__original_level)
+        self.level = level
         # 初始化控制台日志处理器，输出到标准输出流
         self.__handler = logging.StreamHandler(sys.stdout)
         # 添加颜色格式化，并在此处设置格式化后的输出流是否可以被其他处理器处理
@@ -140,7 +139,12 @@ class SwanLabSharedLog:
     def enable_log(self):
         self.__logger.addHandler(self.__handler)
 
-    def set_level(self, level: Levels):
+    @property
+    def level(self):
+        return self.__logger.level
+
+    @level.setter
+    def level(self, level: Levels):
         """
         Set the logging level of the logger.
 
@@ -153,30 +157,7 @@ class SwanLabSharedLog:
 
         :raises: KeyError: If an invalid level is passed.
         """
-        self.__logger.setLevel(self.get_level(level))
-
-    def get_level(self, level: Levels) -> int:
-        """获取等级字符串对应的等级值，用于比较日志等级
-
-        Parameters
-        ----------
-        level : string
-            日志级别，可以是 "debug", "info", "warning", "error", 或 "critical"
-
-        Returns
-        -------
-        logging.level : object
-            logging 模块中的日志等级
-
-        Raises
-        ------
-        KeyError
-            无效的日志级别
-        """
-        if level.lower() in self.levels:
-            return self.levels.get(level.lower())
-        else:
-            raise KeyError("log_level must be one of ['debug', 'info', 'warning', 'error', 'critical']: %s" % level)
+        self.__logger.setLevel(self.levels.get(level.lower()))
 
     def debug(self, message: str):
         self.__logger.debug(message)
