@@ -12,7 +12,15 @@ from tutils import TEMP_DIR
 import pytest
 import shutil
 import nanoid
+import datetime
 import os
+
+
+def test_create_time():
+    t = E.create_time()
+    assert t.endswith("+00:00")
+    d = datetime.datetime.fromisoformat(t)
+    assert d.tzinfo == datetime.UTC
 
 
 class TestGetFolder:

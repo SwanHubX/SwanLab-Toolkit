@@ -11,6 +11,7 @@ import os
 import sys
 from enum import Enum
 from typing import List
+import datetime
 
 
 class SwanLabMode(Enum):
@@ -73,6 +74,12 @@ def is_windows() -> bool:
     elif sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
         return False
     raise OSError("Unknown system, not windows or unix-like system")
+
+
+def create_time() -> str:
+    """获取当前时间(UTC时区)
+    """
+    return datetime.datetime.now(datetime.UTC).isoformat()
 
 
 def get_save_dir() -> str:

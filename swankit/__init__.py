@@ -10,4 +10,4 @@ r"""
     为了语意方便，应该通过swankit的不同模块调用各个功能函数
 """
 
-__all__ = ["env", "error", "callback", "log"]
+__all__ = ["env", "callback", "log"]
