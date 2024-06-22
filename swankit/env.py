@@ -18,6 +18,7 @@ class SwanLabMode(Enum):
     """
     swanlab的解析模式，枚举类
     """
+
     DISABLED = "disabled"
     CLOUD = "cloud"
     # CLOUD_ONLY = "cloud-only"
@@ -77,8 +78,7 @@ def is_windows() -> bool:
 
 
 def create_time() -> str:
-    """获取当前时间(UTC时区)
-    """
+    """获取当前时间(UTC时区)"""
     return datetime.datetime.now(datetime.UTC).isoformat()
 
 
