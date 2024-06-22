@@ -79,7 +79,7 @@ def is_windows() -> bool:
 
 def create_time() -> str:
     """获取当前时间(UTC时区)"""
-    return datetime.datetime.now(datetime.UTC).isoformat()
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 
 def get_save_dir() -> str:
