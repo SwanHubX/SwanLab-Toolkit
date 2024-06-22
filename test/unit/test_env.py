@@ -20,7 +20,7 @@ def test_create_time():
     t = E.create_time()
     assert t.endswith("+00:00")
     d = datetime.datetime.fromisoformat(t)
-    assert d.tzinfo == datetime.UTC
+    assert d.tzinfo == datetime.timezone.utc
 
 
 class TestGetFolder:
