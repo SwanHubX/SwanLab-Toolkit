@@ -127,23 +127,24 @@ class MetricInfo:
         """
         当前指标对应本地的行数，error时为None
         """
-        self.metric_path = None if self.error else os.path.join(logdir, self.key, metric_file_name)
+        _id = self.column_info.id
+        self.metric_path = None if self.error else os.path.join(logdir, _id, metric_file_name)
         """
         指标文件的路径，error时为None
         """
-        self.summary_path = None if self.error else os.path.join(logdir, self.key, self.__SUMMARY_NAME)
+        self.summary_path = None if self.error else os.path.join(logdir, _id, self.__SUMMARY_NAME)
         """
         摘要文件的路径，error时为None
         """
         self.media_dir = media_dir
         """
-        静态文件的根文件夹
+        静态文件的根文件夹，本地保存时需要自己拼接
         """
         self.buffers = buffers
         """
         需要上传的媒体数据，比特流，error时为None，如果上传为非媒体类型（或Text类型），也为None
         """
-        # 写入文件名称，对应上传时的文件名称
+        # 写入文件名称，对应上传时的文件名称：{key}/{文件名称}，文件夹名称为key
         if self.buffers is not None:
             for i, buffer in enumerate(self.buffers):
                 buffer.file_name = "{}/{}".format(self.key, metric["data"][i])
