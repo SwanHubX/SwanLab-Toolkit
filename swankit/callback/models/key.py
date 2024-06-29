@@ -20,6 +20,7 @@ class ColumnInfo:
 
     def __init__(
             self,
+            key_id: str,
             key: str,
             namespace: str,
             chart: ChartType,
@@ -28,6 +29,10 @@ class ColumnInfo:
             reference: Optional[str] = None,
             config: Optional[Dict] = None,
     ):
+        self.id = key_id
+        """
+        当前实验下，列的唯一id，与保存路径等信息有关
+        """
         self.key = key
         """
         列的key名称
