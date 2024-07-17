@@ -21,7 +21,7 @@ class SwanLabMode(Enum):
 
     DISABLED = "disabled"
     CLOUD = "cloud"
-    # CLOUD_ONLY = "cloud-only"
+    CLOUD_ONLY = "cloud-only"
     LOCAL = "local"
 
     @classmethod
