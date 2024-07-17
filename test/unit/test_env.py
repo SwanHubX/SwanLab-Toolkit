@@ -23,6 +23,15 @@ def test_create_time():
     assert d.tzinfo == datetime.timezone.utc
 
 
+def test_list_mode():
+    ms = E.SwanLabMode.list()
+    assert len(ms) == 4
+    assert "disabled" in ms
+    assert "cloud" in ms
+    assert "cloud-only" in ms
+    assert "local" in ms
+
+
 class TestGetFolder:
     """
     测试获取全局保存文件夹
