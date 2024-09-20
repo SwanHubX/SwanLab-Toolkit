@@ -8,7 +8,6 @@ r"""
     回调类，规定回调函数的接口规范。
 """
 
-from typing import Callable
 from abc import ABC, abstractmethod
 from .models import *
 from swankit.core import SwanLabSharedSettings
@@ -42,19 +41,14 @@ class SwanKitCallback(ABC):
             run_id: str,
             exp_name: str,
             description: str,
-            num: int,
-            suffix: str,
-            setter: Callable[[str, str, str, str], None],
+            num: int
     ):
         """
         在初始化实验之前调用，此时SwanLabRun已经初始化完毕
-        FIXME setter函数实际上并不应该被传递，现在是因为存在实验名称不能重复的历史遗留问题
         :param run_id: str, SwanLabRun的运行id
         :param exp_name: str, 实验名称
         :param description: str, 实验描述
         :param num: int, 历史实验数量
-        :param suffix: str, 实验后缀
-        :param setter: Callable[[str, str, str, str], None], 设置实验信息的函数，在这里设置实验信息
         """
         pass
 
