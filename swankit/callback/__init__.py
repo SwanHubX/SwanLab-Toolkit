@@ -11,6 +11,7 @@ r"""
 from abc import ABC, abstractmethod
 from .models import *
 from swankit.core import SwanLabSharedSettings
+from typing import Tuple
 
 
 class SwanKitCallback(ABC):
@@ -37,11 +38,12 @@ class SwanKitCallback(ABC):
         pass
 
     def before_init_experiment(
-            self,
-            run_id: str,
-            exp_name: str,
-            description: str,
-            num: int
+        self,
+        run_id: str,
+        exp_name: str,
+        description: str,
+        num: int,
+        colors: Tuple[str, str],
     ):
         """
         在初始化实验之前调用，此时SwanLabRun已经初始化完毕
@@ -49,6 +51,7 @@ class SwanKitCallback(ABC):
         :param exp_name: str, 实验名称
         :param description: str, 实验描述
         :param num: int, 历史实验数量
+        :param colors: Tuple[str, str], 实验颜色，[light, dark]
         """
         pass
 
