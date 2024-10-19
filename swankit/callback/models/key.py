@@ -19,15 +19,15 @@ class ColumnInfo:
     """
 
     def __init__(
-            self,
-            key_id: str,
-            key: str,
-            namespace: str,
-            chart: ChartType,
-            sort: Optional[int] = None,
-            error: Optional[ParseErrorInfo] = None,
-            reference: Optional[str] = None,
-            config: Optional[Dict] = None,
+        self,
+        key_id: str,
+        key: str,
+        section: str,
+        chart: ChartType,
+        sort: Optional[int] = None,
+        error: Optional[ParseErrorInfo] = None,
+        reference: Optional[str] = None,
+        config: Optional[Dict] = None,
     ):
         self.id = key_id
         """
@@ -37,7 +37,7 @@ class ColumnInfo:
         """
         列的key名称
         """
-        self.namespace = namespace
+        self.namespace = section
         """
         列的命名空间
         """
@@ -85,21 +85,22 @@ class MetricInfo:
     """
     指标信息，当新的指标被log时，会生成这个对象
     """
+
     __SUMMARY_NAME = "_summary.json"
 
     def __init__(
-            self,
-            key: str,
-            column_info: ColumnInfo,
-            error: Optional[ParseErrorInfo],
-            metric: Union[Dict, None] = None,
-            summary: Union[Dict, None] = None,
-            step: int = None,
-            epoch: int = None,
-            logdir: str = None,
-            metric_file_name: str = None,
-            media_dir: str = None,
-            buffers: List[MediaBuffer] = None,
+        self,
+        key: str,
+        column_info: ColumnInfo,
+        error: Optional[ParseErrorInfo],
+        metric: Union[Dict, None] = None,
+        summary: Union[Dict, None] = None,
+        step: int = None,
+        epoch: int = None,
+        logdir: str = None,
+        metric_file_name: str = None,
+        media_dir: str = None,
+        buffers: List[MediaBuffer] = None,
     ):
         self.__error = error
 
