@@ -9,7 +9,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "swankit"
-version = "0.1.1b3"
+version = "0.1.2b0"
 dynamic = ["readme"]
 description = "Base toolkit for SwanLab"
 license = "Apache-2.0"
@@ -23,6 +23,8 @@ authors = [
 "Source" = "https://github.com/SwanHubX/SwanLab-Toolkit"
 "Bug Reports" = "https://github.com/SwanHubX/SwanLab-Toolkit/issues"
 
+[tool.hatch.metadata.hooks.requirements_txt]
+filename = "requirements.txt"
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"
