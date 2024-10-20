@@ -40,6 +40,7 @@ artifacts = [
 [tool.hatch.build.targets.sdist]
 include = [
     "/swankit",
+    "/requirements.txt",
     "/requirements-dev.txt", # 用于测试的依赖
     "/test", # 包含一些测试脚本，确保测试成功
     "/README.md", # 包含readme，因为是动态设置的
