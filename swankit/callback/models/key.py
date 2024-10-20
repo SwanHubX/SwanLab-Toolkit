@@ -24,10 +24,10 @@ class ColumnInfo:
         key_id: str,
         key_name: str,
         key_class: Literal["CUSTOM", "SYSTEM"],
-        section_name: str,
-        section_sort: int,
         chart_type: ChartType,
         chart_reference: Literal["step", "time"],
+        section_name: Optional[str],
+        section_sort: Optional[int] = None,
         error: Optional[ParseErrorInfo] = None,
         config: Optional[Dict] = None,
     ):
@@ -37,10 +37,10 @@ class ColumnInfo:
         :param key_id: 当前实验下，列的唯一id，与保存路径等信息有关
         :param key_name: key的别名
         :param key_class: 列的类型，CUSTOM为自定义列，SYSTEM为系统生成列
-        :param section_name: 列的组名
-        :param section_sort: 列在section中的参考排序，不代表实际排序
         :param chart_type: 列对应的图表类型
         :param chart_reference: 这个列对应图表的参考系，step为步数，time为时间
+        :param section_name: 列的组名
+        :param section_sort: 列在section中的参考排序，不代表实际排序（目前为冗余设计）
         :param error: 列的类型错误信息
         :param config: 列的额外配置信息
         """
@@ -49,11 +49,11 @@ class ColumnInfo:
         self.key_name = key_name
         self.key_class = key_class
 
-        self.section_name = section_name
-        self.section_sort = section_sort
-
         self.chart_type = chart_type
         self.chart_reference = chart_reference
+
+        self.section_name = section_name
+        self.section_sort = section_sort
 
         self.error = error
         self.config = config if config is not None else {}
