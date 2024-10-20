@@ -161,7 +161,7 @@ class MetricInfo:
         return self.metric["data"]
 
 
-class ErrorMetricInfo(MetricInfo):
+class MetricErrorInfo(MetricInfo):
     def __init__(self, column_info: ColumnInfo, error: ParseErrorInfo):
         """
         错误的指标信息，简化输入参数
