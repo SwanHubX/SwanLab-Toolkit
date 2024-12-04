@@ -230,6 +230,7 @@ class ParseResult:
         config: Optional[List[Dict]] = None,
         more: Optional[List[Dict]] = None,
         buffers: Optional[List[MediaBuffer]] = None,
+        reference: ChartReference = "STEP",
     ):
         """
         :param section: 转换后数据对应的section
@@ -238,6 +239,7 @@ class ParseResult:
         :param config: 存储在.log中的配置
         :param more: 存储在.log中的更多信息
         :param buffers: 存储于media文件夹中的原始数据，比特流，特别的，对于某些字符串即原始数据的情况，此处为None
+        :param reference: 图表数据的参考类型
         """
         self.__data = data
         self.config = config
@@ -245,8 +247,7 @@ class ParseResult:
         self.buffers = buffers
         self.section = section
         self.chart = chart
-        # 默认的reference
-        self.reference: ChartReference = "STEP"
+        self.reference = reference
         self.step = None
 
     @property
