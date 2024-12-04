@@ -7,7 +7,7 @@ r"""
 @Description:
     核心解析模块工具
 """
-from .data import BaseType, MediaType, DataSuite, MediaBuffer, ParseResult, ParseErrorInfo
+from .data import BaseType, MediaType, DataSuite, MediaBuffer, ParseResult, ParseErrorInfo, ChartReference
 from .settings import SwanLabSharedSettings
 
 ChartType = BaseType.Chart
@@ -20,5 +20,6 @@ __all__ = [
     "MediaBuffer",
     "ParseResult",
     "ParseErrorInfo",
-    "SwanLabSharedSettings"
+    "SwanLabSharedSettings",
+    "ChartReference",
 ]

@@ -8,9 +8,12 @@ r"""
     与Key相关的回调函数触发时的模型
 """
 from typing import Union, Optional, Dict, List, Literal
-from swankit.core import ChartType, ParseErrorInfo, MediaBuffer
+
+from swankit.core import ChartType, ParseErrorInfo, MediaBuffer, ChartReference
 from urllib.parse import quote
 import os
+
+KeyClass = Literal["CUSTOM", "SYSTEM"]
 
 
 class ColumnInfo:
@@ -23,9 +26,9 @@ class ColumnInfo:
         key: str,
         key_id: str,
         key_name: str,
-        key_class: Literal["CUSTOM", "SYSTEM"],
+        key_class: KeyClass,
         chart_type: ChartType,
-        chart_reference: Literal["step", "time"],
+        chart_reference: ChartReference,
         section_name: Optional[str],
         section_sort: Optional[int] = None,
         error: Optional[ParseErrorInfo] = None,

@@ -7,13 +7,15 @@ r"""
 @Description:
     数据处理模型
 """
-from typing import List, Dict, Optional, ByteString, Union, Tuple
+from typing import List, Dict, Optional, ByteString, Union, Tuple, Literal
 from abc import ABC, abstractmethod
 from enum import Enum
 from io import BytesIO
 import hashlib
 import math
 import io
+
+ChartReference = Literal["STEP", "TIME"]
 
 
 class DataSuite:
@@ -193,6 +195,7 @@ class MediaType(BaseType):  # noqa
     """
     媒体类型，用于区分标量和媒体，不用做实例化，应该由子类继承
     """
+
     pass
 
 
@@ -220,13 +223,13 @@ class ParseResult:
     """
 
     def __init__(
-            self,
-            section: str = None,
-            chart: BaseType.Chart = None,
-            data: Union[List[str], float] = None,
-            config: Optional[List[Dict]] = None,
-            more: Optional[List[Dict]] = None,
-            buffers: Optional[List[MediaBuffer]] = None,
+        self,
+        section: str = None,
+        chart: BaseType.Chart = None,
+        data: Union[List[str], float] = None,
+        config: Optional[List[Dict]] = None,
+        more: Optional[List[Dict]] = None,
+        buffers: Optional[List[MediaBuffer]] = None,
     ):
         """
         :param section: 转换后数据对应的section
@@ -243,7 +246,7 @@ class ParseResult:
         self.section = section
         self.chart = chart
         # 默认的reference
-        self.reference = "step"
+        self.reference: ChartReference = "STEP"
         self.step = None
 
     @property
@@ -291,11 +294,11 @@ class ParseErrorInfo:
     """
 
     def __init__(
-            self,
-            expected: Optional[str],
-            got: Optional[str],
-            chart: Optional[BaseType.Chart],
-            duplicated: bool = False
+        self,
+        expected: Optional[str],
+        got: Optional[str],
+        chart: Optional[BaseType.Chart],
+        duplicated: bool = False,
     ):
         """
         :param expected: 期望的数据类型

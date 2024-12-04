@@ -9,7 +9,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "swankit"
-version = "0.1.2b1"
+version = "0.1.2b2"
 dynamic = ["readme", "dependencies"]
 description = "Base toolkit for SwanLab"
 license = "Apache-2.0"
