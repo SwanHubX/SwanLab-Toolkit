@@ -7,7 +7,7 @@ r"""
 @Description:
     与Key相关的回调函数触发时的模型
 """
-from typing import Union, Optional, Dict, List, Literal
+from typing import Union, Optional, Dict, List, Literal, Tuple, TypedDict
 
 from swankit.core import ChartType, ParseErrorInfo, MediaBuffer, ChartReference
 from urllib.parse import quote
@@ -15,6 +15,15 @@ import os
 
 KeyClass = Literal["CUSTOM", "SYSTEM"]
 SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
+YRange = Optional[Tuple[Optional[float], Optional[float]]]
+
+
+class ColumnConfig(TypedDict):
+    """
+    列信息配置
+    """
+
+    y_range: YRange
 
 
 class ColumnInfo:
@@ -34,7 +43,7 @@ class ColumnInfo:
         section_type: SectionType,
         section_sort: Optional[int] = None,
         error: Optional[ParseErrorInfo] = None,
-        config: Optional[Dict] = None,
+        config: Optional[ColumnConfig] = None,
     ):
         """
         生成的列信息对象
@@ -62,7 +71,7 @@ class ColumnInfo:
         self.section_type = section_type
 
         self.error = error
-        self.config = config if config is not None else {}
+        self.config = config
 
     @property
     def got(self):

@@ -175,14 +175,6 @@ class BaseType(ABC, DynamicProperty):
         return "default"
 
     # noinspection PyMethodMayBeStatic
-    def get_config(self) -> Optional[Dict]:
-        """
-        获取图表的config配置信息，应该返回一个字典，或者为None
-        为None时代表不需要配置
-        """
-        return None
-
-    # noinspection PyMethodMayBeStatic
     def get_more(self) -> Optional[Dict]:
         """
         代表当前步骤的此数据支持标注的更多内容，应该返回一个字典，或者为None
@@ -227,7 +219,6 @@ class ParseResult:
         section: str = None,
         chart: BaseType.Chart = None,
         data: Union[List[str], float] = None,
-        config: Optional[List[Dict]] = None,
         more: Optional[List[Dict]] = None,
         buffers: Optional[List[MediaBuffer]] = None,
         reference: ChartReference = "STEP",
@@ -236,13 +227,11 @@ class ParseResult:
         :param section: 转换后数据对应的section
         :param chart: 转换后数据对应的图表类型，枚举类型
         :param data: 存储在.log中的数据
-        :param config: 存储在.log中的配置
         :param more: 存储在.log中的更多信息
         :param buffers: 存储于media文件夹中的原始数据，比特流，特别的，对于某些字符串即原始数据的情况，此处为None
         :param reference: 图表数据的参考类型
         """
         self.__data = data
-        self.config = config
         self.more = more
         self.buffers = buffers
         self.section = section
