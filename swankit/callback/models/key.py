@@ -14,6 +14,7 @@ from urllib.parse import quote
 import os
 
 KeyClass = Literal["CUSTOM", "SYSTEM"]
+SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
 
 
 class ColumnInfo:
@@ -30,6 +31,7 @@ class ColumnInfo:
         chart_type: ChartType,
         chart_reference: ChartReference,
         section_name: Optional[str],
+        section_type: SectionType,
         section_sort: Optional[int] = None,
         error: Optional[ParseErrorInfo] = None,
         config: Optional[Dict] = None,
@@ -57,6 +59,7 @@ class ColumnInfo:
 
         self.section_name = section_name
         self.section_sort = section_sort
+        self.section_type = section_type
 
         self.error = error
         self.config = config if config is not None else {}
