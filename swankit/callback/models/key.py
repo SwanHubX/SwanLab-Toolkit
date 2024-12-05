@@ -7,10 +7,23 @@ r"""
 @Description:
     与Key相关的回调函数触发时的模型
 """
-from typing import Union, Optional, Dict, List, Literal
-from swankit.core import ChartType, ParseErrorInfo, MediaBuffer
+from typing import Union, Optional, Dict, List, Literal, Tuple, TypedDict
+
+from swankit.core import ChartType, ParseErrorInfo, MediaBuffer, ChartReference
 from urllib.parse import quote
 import os
+
+ColumnClass = Literal["CUSTOM", "SYSTEM"]
+SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
+YRange = Optional[Tuple[Optional[float], Optional[float]]]
+
+
+class ColumnConfig(TypedDict):
+    """
+    列信息配置
+    """
+
+    y_range: YRange
 
 
 class ColumnInfo:
@@ -21,22 +34,23 @@ class ColumnInfo:
     def __init__(
         self,
         key: str,
-        key_id: str,
-        key_name: str,
-        key_class: Literal["CUSTOM", "SYSTEM"],
+        kid: str,
+        name: str,
+        cls: ColumnClass,
         chart_type: ChartType,
-        chart_reference: Literal["step", "time"],
+        chart_reference: ChartReference,
         section_name: Optional[str],
+        section_type: SectionType,
         section_sort: Optional[int] = None,
         error: Optional[ParseErrorInfo] = None,
-        config: Optional[Dict] = None,
+        config: Optional[ColumnConfig] = None,
     ):
         """
         生成的列信息对象
-        :param key: 生成的列名称
-        :param key_id: 当前实验下，列的唯一id，与保存路径等信息有关
-        :param key_name: key的别名
-        :param key_class: 列的类型，CUSTOM为自定义列，SYSTEM为系统生成列
+        :param key: 生成的列名称，作为索引键值
+        :param kid: 当前实验下，列的唯一id，与保存路径等信息有关，与云端请求无关
+        :param name: 列的别名
+        :param cls: 列的类型，CUSTOM为自定义列，SYSTEM为系统生成列
         :param chart_type: 列对应的图表类型
         :param chart_reference: 这个列对应图表的参考系，step为步数，time为时间
         :param section_name: 列的组名
@@ -45,18 +59,19 @@ class ColumnInfo:
         :param config: 列的额外配置信息
         """
         self.key = key
-        self.key_id = key_id
-        self.key_name = key_name
-        self.key_class = key_class
+        self.kid = kid
+        self.name = name
+        self.cls = cls
 
         self.chart_type = chart_type
         self.chart_reference = chart_reference
 
         self.section_name = section_name
         self.section_sort = section_sort
+        self.section_type = section_type
 
         self.error = error
-        self.config = config if config is not None else {}
+        self.config = config
 
     @property
     def got(self):
@@ -124,7 +139,7 @@ class MetricInfo:
         self.metric_summary = metric_summary
         self.metric_step = metric_step
         self.metric_epoch = metric_epoch
-        _id = self.column_info.key_id
+        _id = self.column_info.kid
         self.metric_file_path = None if self.is_error else os.path.join(swanlab_logdir, _id, metric_file_name)
         self.summary_file_path = None if self.is_error else os.path.join(swanlab_logdir, _id, self.__SUMMARY_NAME)
         self.swanlab_media_dir = swanlab_media_dir

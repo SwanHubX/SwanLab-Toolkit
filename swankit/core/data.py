@@ -7,13 +7,15 @@ r"""
 @Description:
     数据处理模型
 """
-from typing import List, Dict, Optional, ByteString, Union, Tuple
+from typing import List, Dict, Optional, ByteString, Union, Tuple, Literal
 from abc import ABC, abstractmethod
 from enum import Enum
 from io import BytesIO
 import hashlib
 import math
 import io
+
+ChartReference = Literal["STEP", "TIME"]
 
 
 class DataSuite:
@@ -173,14 +175,6 @@ class BaseType(ABC, DynamicProperty):
         return "default"
 
     # noinspection PyMethodMayBeStatic
-    def get_config(self) -> Optional[Dict]:
-        """
-        获取图表的config配置信息，应该返回一个字典，或者为None
-        为None时代表不需要配置
-        """
-        return None
-
-    # noinspection PyMethodMayBeStatic
     def get_more(self) -> Optional[Dict]:
         """
         代表当前步骤的此数据支持标注的更多内容，应该返回一个字典，或者为None
@@ -193,6 +187,7 @@ class MediaType(BaseType):  # noqa
     """
     媒体类型，用于区分标量和媒体，不用做实例化，应该由子类继承
     """
+
     pass
 
 
@@ -220,30 +215,28 @@ class ParseResult:
     """
 
     def __init__(
-            self,
-            section: str = None,
-            chart: BaseType.Chart = None,
-            data: Union[List[str], float] = None,
-            config: Optional[List[Dict]] = None,
-            more: Optional[List[Dict]] = None,
-            buffers: Optional[List[MediaBuffer]] = None,
+        self,
+        section: str = None,
+        chart: BaseType.Chart = None,
+        data: Union[List[str], float] = None,
+        more: Optional[List[Dict]] = None,
+        buffers: Optional[List[MediaBuffer]] = None,
+        reference: ChartReference = "STEP",
     ):
         """
         :param section: 转换后数据对应的section
         :param chart: 转换后数据对应的图表类型，枚举类型
         :param data: 存储在.log中的数据
-        :param config: 存储在.log中的配置
         :param more: 存储在.log中的更多信息
         :param buffers: 存储于media文件夹中的原始数据，比特流，特别的，对于某些字符串即原始数据的情况，此处为None
+        :param reference: 图表数据的参考类型
         """
         self.__data = data
-        self.config = config
         self.more = more
         self.buffers = buffers
         self.section = section
         self.chart = chart
-        # 默认的reference
-        self.reference = "step"
+        self.reference = reference
         self.step = None
 
     @property
@@ -291,11 +284,11 @@ class ParseErrorInfo:
     """
 
     def __init__(
-            self,
-            expected: Optional[str],
-            got: Optional[str],
-            chart: Optional[BaseType.Chart],
-            duplicated: bool = False
+        self,
+        expected: Optional[str],
+        got: Optional[str],
+        chart: Optional[BaseType.Chart],
+        duplicated: bool = False,
     ):
         """
         :param expected: 期望的数据类型
