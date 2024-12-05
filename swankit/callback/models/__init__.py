@@ -7,7 +7,7 @@ r"""
 @Description:
     与回调函数通信时的模型
 """
-from .key import MediaBuffer, MetricInfo, ColumnInfo, MetricErrorInfo, KeyClass, SectionType, ColumnConfig, YRange
+from .key import MediaBuffer, MetricInfo, ColumnInfo, MetricErrorInfo, ColumnClass, SectionType, ColumnConfig, YRange
 from .error import OperateErrorInfo
 from .runtime import RuntimeInfo
 
@@ -18,7 +18,7 @@ __all__ = [
     "MetricErrorInfo",
     "OperateErrorInfo",
     "RuntimeInfo",
-    "KeyClass",
+    "ColumnClass",
     "SectionType",
     "ColumnConfig",
     "YRange",

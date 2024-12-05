@@ -8,7 +8,7 @@ r"""
     运行时信息模型
 """
 from abc import ABC, abstractmethod
-from typing import Optional, Any
+from typing import Optional
 import json
 import yaml
 import os
@@ -108,13 +108,7 @@ class ConfigInfo(InfoWriter):
         # 没有在__init__中直接修改是因为可能会有其他地方需要原始数据，并且会丢失一些性能
         if self.__data is not None:
             return self.__data
-        self.__data = {
-            k: {
-                "value": v,
-                "sort": i,
-                "desc": ""
-            } for i, (k, v) in enumerate(self.info.items())
-        }
+        self.__data = {k: {"value": v, "sort": i, "desc": ""} for i, (k, v) in enumerate(self.info.items())}
         return self.__data
 
 
@@ -130,14 +124,10 @@ class RuntimeInfo:
         :param metadata: 系统信息
         :param config: 上传的配置信息
         """
-        self.requirements: Optional[RequirementInfo] = RequirementInfo(
-            requirements
-        ) if requirements is not None else None
+        self.requirements: Optional[RequirementInfo] = (
+            RequirementInfo(requirements) if requirements is not None else None
+        )
 
-        self.metadata: Optional[MetadataInfo] = MetadataInfo(
-            metadata
-        ) if metadata is not None else None
+        self.metadata: Optional[MetadataInfo] = MetadataInfo(metadata) if metadata is not None else None
 
-        self.config: Optional[ConfigInfo] = ConfigInfo(
-            config
-        ) if config is not None else None
+        self.config: Optional[ConfigInfo] = ConfigInfo(config) if config is not None else None
