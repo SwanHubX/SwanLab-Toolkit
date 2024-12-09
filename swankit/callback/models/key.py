@@ -7,7 +7,7 @@ r"""
 @Description:
     与Key相关的回调函数触发时的模型
 """
-from typing import Union, Optional, Dict, List, Literal, Tuple, TypedDict
+from typing import Union, Optional, Dict, List, Literal, Tuple
 
 from swankit.core import ChartType, ParseErrorInfo, MediaBuffer, ChartReference
 from urllib.parse import quote
@@ -23,28 +23,44 @@ class ColumnConfig:
     列信息配置
     """
 
-    def __init__(self, y_range: YRange = None, chart_name: Optional[str] = None, metric_name: Optional[str] = None):
+    def __init__(
+        self,
+        y_range: YRange = None,
+        chart_name: Optional[str] = None,
+        chart_index: Optional[str] = None,
+        metric_name: Optional[str] = None,
+    ):
         """
         生成的列信息配置对象
         :param y_range: y轴范围
         :param chart_name: 图表名称
+        :param chart_index: 图表索引
         :param metric_name: 指标名称
         """
         self.y_range: YRange = y_range
         self.chart_name: Optional[str] = chart_name
+        self.chart_index: Optional[str] = chart_index
         self.metric_name: Optional[str] = metric_name
 
-    def clone(self, y_range: YRange = None, chart_name: Optional[str] = None, metric_name: Optional[str] = None):
+    def clone(
+        self,
+        y_range: YRange = None,
+        chart_name: Optional[str] = None,
+        chart_index: Optional[str] = None,
+        metric_name: Optional[str] = None,
+    ):
         """
         克隆一个新的ColumnConfig对象，并且可以修改其中的参数
         :param y_range: y轴范围
         :param chart_name: 图表名称
+        :param chart_index: 图表索引
         :param metric_name: 指标名称
         """
         return ColumnConfig(
             y_range=y_range if y_range is not None else self.y_range,
             chart_name=chart_name if chart_name is not None else self.chart_name,
             metric_name=metric_name if metric_name is not None else self.metric_name,
+            chart_index=chart_index if chart_index is not None else self.chart_index,
         )
 
 

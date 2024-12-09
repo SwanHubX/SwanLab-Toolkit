@@ -3,10 +3,11 @@ from swankit.core import ChartType
 
 
 def test_column_config():
-    c = K.ColumnConfig(y_range=(0, 100), chart_name="CPU Utilization (%)")
+    c = K.ColumnConfig(y_range=(0, 100), chart_name="CPU Utilization (%)", metric_name=None)
     assert c.y_range == (0, 100)
     assert c.chart_name == "CPU Utilization (%)"
     assert c.metric_name is None
+
     clone = c.clone(y_range=None, metric_name="12345")
     assert clone.y_range == (0, 100)
     assert clone.chart_name == c.chart_name
@@ -15,6 +16,11 @@ def test_column_config():
     assert clone.y_range == (0, 50)
     assert clone.chart_name == c.chart_name
     assert clone.metric_name == "12345"
+    c = K.ColumnConfig(y_range=(0, 100), chart_name="CPU Utilization (%)", metric_name="12345", chart_index="1")
+    assert c.y_range == (0, 100)
+    assert c.chart_name == "CPU Utilization (%)"
+    assert c.metric_name == "12345"
+    assert c.chart_index == "1"
 
 
 def test_column_info():

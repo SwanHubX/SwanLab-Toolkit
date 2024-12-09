@@ -10,6 +10,7 @@ r"""
 import os
 import sys
 from enum import Enum
+from platform import platform
 from typing import List
 import datetime
 
@@ -75,6 +76,13 @@ def is_windows() -> bool:
     elif sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
         return False
     raise OSError("Unknown system, not windows or unix-like system")
+
+
+def is_macos() -> bool:
+    """判断当前操作系统是否是macos
+    :return: True表示是macos系统，False表示不是macos系统
+    """
+    return "mac" in platform().lower()
 
 
 def create_time() -> str:
