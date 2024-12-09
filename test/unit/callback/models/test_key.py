@@ -2,6 +2,21 @@ from swankit.callback.models import key as K
 from swankit.core import ChartType
 
 
+def test_column_config():
+    c = K.ColumnConfig(y_range=(0, 100), chart_name="CPU Utilization (%)")
+    assert c.y_range == (0, 100)
+    assert c.chart_name == "CPU Utilization (%)"
+    assert c.metric_name is None
+    clone = c.clone(y_range=None, metric_name="12345")
+    assert clone.y_range == (0, 100)
+    assert clone.chart_name == c.chart_name
+    assert clone.metric_name == "12345"
+    clone = c.clone(y_range=(0, 50), chart_name="CPU Utilization (%)", metric_name="12345")
+    assert clone.y_range == (0, 50)
+    assert clone.chart_name == c.chart_name
+    assert clone.metric_name == "12345"
+
+
 def test_column_info():
     c = K.ColumnInfo(
         key="a/1",
