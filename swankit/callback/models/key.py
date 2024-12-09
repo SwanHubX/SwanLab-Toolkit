@@ -7,7 +7,7 @@ r"""
 @Description:
     与Key相关的回调函数触发时的模型
 """
-from typing import Union, Optional, Dict, List, Literal, Tuple, TypedDict
+from typing import Union, Optional, Dict, List, Literal, Tuple, TypedDict, NotRequired
 
 from swankit.core import ChartType, ParseErrorInfo, MediaBuffer, ChartReference
 from urllib.parse import quote
@@ -18,21 +18,14 @@ SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
 YRange = Optional[Tuple[Optional[float], Optional[float]]]
 
 
-class ColumnConfig:
+class ColumnConfig(TypedDict):
     """
     列信息配置
     """
 
-    def __init__(self, y_range: YRange = None, chart_name: Optional[str] = None, metric_name: Optional[str] = None):
-        """
-        生成的列信息配置对象
-        :param y_range: y轴范围
-        :param chart_name: 图表名称
-        :param metric_name: 指标名称
-        """
-        self.y_range: YRange = y_range
-        self.chart_name: Optional[str] = chart_name
-        self.metric_name: Optional[str] = metric_name
+    y_range: YRange
+    metric_name: NotRequired[str]
+    chart_name: NotRequired[str]
 
 
 class ColumnInfo:
