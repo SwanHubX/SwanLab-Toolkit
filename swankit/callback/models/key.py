@@ -34,6 +34,19 @@ class ColumnConfig:
         self.chart_name: Optional[str] = chart_name
         self.metric_name: Optional[str] = metric_name
 
+    def clone(self, y_range: YRange = None, chart_name: Optional[str] = None, metric_name: Optional[str] = None):
+        """
+        克隆一个新的ColumnConfig对象，并且可以修改其中的参数
+        :param y_range: y轴范围
+        :param chart_name: 图表名称
+        :param metric_name: 指标名称
+        """
+        return ColumnConfig(
+            y_range=y_range if y_range is not None else self.y_range,
+            chart_name=chart_name if chart_name is not None else self.chart_name,
+            metric_name=metric_name if metric_name is not None else self.metric_name,
+        )
+
 
 class ColumnInfo:
     """
