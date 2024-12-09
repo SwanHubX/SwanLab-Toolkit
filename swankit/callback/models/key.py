@@ -18,12 +18,21 @@ SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
 YRange = Optional[Tuple[Optional[float], Optional[float]]]
 
 
-class ColumnConfig(TypedDict):
+class ColumnConfig:
     """
     列信息配置
     """
 
-    y_range: YRange
+    def __init__(self, y_range: YRange = None, chart_name: Optional[str] = None, metric_name: Optional[str] = None):
+        """
+        生成的列信息配置对象
+        :param y_range: y轴范围
+        :param chart_name: 图表名称
+        :param metric_name: 指标名称
+        """
+        self.y_range: YRange = y_range
+        self.chart_name: Optional[str] = chart_name
+        self.metric_name: Optional[str] = metric_name
 
 
 class ColumnInfo:
