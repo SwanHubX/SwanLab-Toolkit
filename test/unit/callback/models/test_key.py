@@ -21,6 +21,12 @@ def test_column_config():
     assert c.chart_name == "CPU Utilization (%)"
     assert c.metric_name == "12345"
     assert c.chart_index == "1"
+    c = c.clone(metric_color=("red", "blue"))
+    assert c.y_range == (0, 100)
+    assert c.chart_name == "CPU Utilization (%)"
+    assert c.metric_name == "12345"
+    assert c.chart_index == "1"
+    assert c.metric_color == ("red", "blue")
 
 
 def test_column_info():
