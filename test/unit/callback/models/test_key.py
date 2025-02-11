@@ -109,3 +109,5 @@ def test_metric_info():
     assert m.metric_epoch == 1
     assert m.swanlab_media_dir == "."
     assert m.metric_file_path == f"./{c.kid}/1.log"
+    assert str(m) == "1"
+    assert repr(m) == "1"

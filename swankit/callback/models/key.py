@@ -211,13 +211,19 @@ class MetricInfo:
         return self.column_info.error
 
     @property
-    def data(self) -> Union[Dict, None]:
+    def data(self):
         """
         指标数据的data字段
         """
         if self.is_error:
             return None
         return self.metric["data"]
+
+    def __str__(self):
+        return str(self.data)
+
+    def __repr__(self):
+        return str(self.data)
 
 
 class MetricErrorInfo(MetricInfo):
