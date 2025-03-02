@@ -117,7 +117,7 @@ class CondaInfo(InfoWriter):
     conda环境信息
     """
 
-    def __init__(self, info: dict):
+    def __init__(self, info: str):
         super().__init__(info)
         self.name = "conda.yaml"
 
@@ -126,7 +126,7 @@ class CondaInfo(InfoWriter):
             f.write(self.dumps())
 
     def dumps(self):
-        return yaml.dump(self.to_dict(), allow_unicode=True)
+        return self.info
 
     def to_dict(self):
         raise NotImplementedError("CondaInfo has no to_dict method")
@@ -138,7 +138,7 @@ class RuntimeInfo:
     如果某些信息为None，代表没有传入配置
     """
 
-    def __init__(self, requirements: str = None, metadata: dict = None, config: dict = None):
+    def __init__(self, requirements: str = None, metadata: dict = None, config: dict = None, conda: str = None):
         """
         :param requirements: python依赖信息
         :param metadata: 系统信息
@@ -151,3 +151,5 @@ class RuntimeInfo:
         self.metadata: Optional[MetadataInfo] = MetadataInfo(metadata) if metadata is not None else None
 
         self.config: Optional[ConfigInfo] = ConfigInfo(config) if config is not None else None
+
+        self.conda: Optional[CondaInfo] = CondaInfo(conda) if conda is not None else None
