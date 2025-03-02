@@ -149,6 +149,8 @@ class BaseType(ABC, DynamicProperty):
 
         TEXT = ChartItem("text", "TEXT")
 
+        OBJECT3D = ChartItem("object3d", "OBJECT3D")
+
     # ---------------------------------- 需要子类实现的方法 ----------------------------------
 
     @abstractmethod

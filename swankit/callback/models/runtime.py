@@ -112,6 +112,26 @@ class ConfigInfo(InfoWriter):
         return self.__data
 
 
+class CondaInfo(InfoWriter):
+    """
+    conda环境信息
+    """
+
+    def __init__(self, info: dict):
+        super().__init__(info)
+        self.name = "conda.yaml"
+
+    def write(self, path: str):
+        with open(os.path.join(path, self.name), "w", encoding="utf-8") as f:
+            f.write(self.dumps())
+
+    def dumps(self):
+        return yaml.dump(self.to_dict(), allow_unicode=True)
+
+    def to_dict(self):
+        raise NotImplementedError("CondaInfo has no to_dict method")
+
+
 class RuntimeInfo:
     """
     运行时信息，包括系统信息，依赖信息等
