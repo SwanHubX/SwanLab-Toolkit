@@ -11,7 +11,7 @@ r"""
 from abc import ABC, abstractmethod
 from .models import *
 from swankit.core import SwanLabSharedSettings
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 class SwanKitCallback(ABC):
@@ -20,7 +20,7 @@ class SwanKitCallback(ABC):
     此处只定义会被调用的函数，用于接口规范
     """
 
-    def on_init(self, proj_name: str, workspace: str, logdir: str = None, **kwargs):
+    def on_init(self, proj_name: str, workspace: str, logdir: str = None, *args, **kwargs):
         """
         执行`swanlab.init`时调用，此时运行时环境变量没有被设置，此时修改环境变量还是有效的
         :param logdir: str, 用户设置的日志目录
@@ -30,7 +30,7 @@ class SwanKitCallback(ABC):
         """
         pass
 
-    def before_run(self, settings: SwanLabSharedSettings):
+    def before_run(self, settings: SwanLabSharedSettings, *args, **kwargs):
         """
         在运行实验之前调用
         :param settings: SwanLabSharedSettings, 运行时的共享配置
@@ -44,6 +44,8 @@ class SwanKitCallback(ABC):
         description: str,
         num: int,
         colors: Tuple[str, str],
+        *args,
+        **kwargs,
     ):
         """
         在初始化实验之前调用，此时SwanLabRun已经初始化完毕
@@ -55,44 +57,44 @@ class SwanKitCallback(ABC):
         """
         pass
 
-    def on_run(self):
+    def on_run(self, *args, **kwargs):
         """
         SwanLabRun初始化完毕时调用
         """
         pass
 
-    def on_run_error_from_operator(self, e: OperateErrorInfo):
+    def on_run_error_from_operator(self, e: OperateErrorInfo, *args, **kwargs):
         """
         执行`on_run`错误时被操作员调用
         """
         pass
 
-    def on_runtime_info_update(self, r: RuntimeInfo):
+    def on_runtime_info_update(self, r: RuntimeInfo, *args, **kwargs):
         """
         运行时信息更新时调用
         :param r: RuntimeInfo, 运行时信息
         """
         pass
 
-    def on_log(self):
+    def on_log(self, data: dict, step: Optional[int], *args, **kwargs):
         """
         每次执行swanlab.log时调用
         """
         pass
 
-    def on_column_create(self, column_info: ColumnInfo):
+    def on_column_create(self, column_info: ColumnInfo, *args, **kwargs):
         """
         列创建回调函数,新增列信息时调用
         """
         pass
 
-    def on_metric_create(self, metric_info: MetricInfo):
+    def on_metric_create(self, metric_info: MetricInfo, *args, **kwargs):
         """
         指标创建回调函数,新增指标信息时调用
         """
         pass
 
-    def on_stop(self, error: str = None):
+    def on_stop(self, error: str = None, *args, **kwargs):
         """
         训练结束时的回调函数
         """
