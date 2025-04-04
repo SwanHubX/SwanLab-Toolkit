@@ -151,6 +151,8 @@ class BaseType(ABC, DynamicProperty):
 
         OBJECT3D = ChartItem("object3d", "OBJECT3D")
 
+        MOLECULE = ChartItem("molecule", "MOLECULE")
+
     # ---------------------------------- 需要子类实现的方法 ----------------------------------
 
     @abstractmethod
