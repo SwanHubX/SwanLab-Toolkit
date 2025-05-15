@@ -59,13 +59,15 @@ class LazySettings:
         if self.__description is not None:
             raise ValueError("description can only be set once")
         self.__description = description
-    
+
     @property
     def tags(self) -> Optional[List[str]]:
+        """实验标签"""
         return self.__tags
-    
+
     @tags.setter
-    def tags(self, tags:List[str]) -> None:
+    def tags(self, tags: List[str]) -> None:
+        """实验标签"""
         if self.__tags is not None:
             raise ValueError("tags can only be set once")
         self.__tags = tags
