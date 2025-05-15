@@ -5,6 +5,8 @@
 @description: 测试 settings
 """
 
+import pytest
+
 
 def test_lazy_settings():
     from swankit.core.settings import LazySettings
@@ -18,17 +20,9 @@ def test_lazy_settings():
     assert settings.exp_colors == ("red", "blue")
     assert settings.description == "test description"
 
-    try:
+    with pytest.raises(ValueError, match="exp_name can only be set once"):
         settings.exp_name = "test2"
-    except ValueError as e:
-        assert str(e) == "exp_name can only be set once"
-
-    try:
+    with pytest.raises(ValueError, match="exp_colors can only be set once"):
         settings.exp_colors = ("green", "yellow")
-    except ValueError as e:
-        assert str(e) == "exp_colors can only be set once"
-
-    try:
+    with pytest.raises(ValueError, match="description can only be set once"):
         settings.description = "test description 2"
-    except ValueError as e:
-        assert str(e) == "description can only be set once"
