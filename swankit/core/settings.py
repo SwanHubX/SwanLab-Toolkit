@@ -8,7 +8,7 @@ r"""
     swankit 为 swanlab 定制的配置类
 """
 import os
-from typing import Tuple
+from typing import Tuple, List, Optional
 
 
 class LazySettings:
@@ -20,6 +20,7 @@ class LazySettings:
         self.__exp_name = None
         self.__exp_colors = None
         self.__description = None
+        self.__tags = None
 
     @property
     def exp_name(self) -> str:
@@ -36,7 +37,7 @@ class LazySettings:
         self.__exp_name = exp_name
 
     @property
-    def exp_colors(self) -> Tuple[str, str]:
+    def exp_colors(self) -> Optional[Tuple[str, str]]:
         """实验颜色"""
         return self.__exp_colors
 
@@ -48,7 +49,7 @@ class LazySettings:
         self.__exp_colors = exp_colors
 
     @property
-    def description(self) -> str:
+    def description(self) -> Optional[str]:
         """实验描述"""
         return self.__description
 
@@ -58,6 +59,18 @@ class LazySettings:
         if self.__description is not None:
             raise ValueError("description can only be set once")
         self.__description = description
+
+    @property
+    def tags(self) -> Optional[List[str]]:
+        """实验标签"""
+        return self.__tags
+
+    @tags.setter
+    def tags(self, tags: List[str]) -> None:
+        """实验标签"""
+        if self.__tags is not None:
+            raise ValueError("tags can only be set once")
+        self.__tags = tags
 
 
 class SwanLabSharedSettings(LazySettings):

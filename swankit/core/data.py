@@ -153,6 +153,8 @@ class BaseType(ABC, DynamicProperty):
 
         MOLECULE = ChartItem("molecule", "MOLECULE")
 
+        ECHARTS = ChartItem("echarts", "ECHARTS")
+
     # ---------------------------------- 需要子类实现的方法 ----------------------------------
 
     @abstractmethod
