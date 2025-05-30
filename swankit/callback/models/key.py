@@ -14,7 +14,7 @@ from urllib.parse import quote
 import os
 
 ColumnClass = Literal["CUSTOM", "SYSTEM"]
-SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM"]
+SectionType = Literal["PINNED", "HIDDEN", "PUBLIC", "SYSTEM", "CUSTOM"]
 YRange = Optional[Tuple[Optional[float], Optional[float]]]
 
 
