@@ -42,7 +42,6 @@ class SwanKitCallback(ABC):
         run_id: str,
         exp_name: str,
         description: str,
-        num: int,
         colors: Tuple[str, str],
         *args,
         **kwargs,
@@ -52,7 +51,6 @@ class SwanKitCallback(ABC):
         :param run_id: str, SwanLabRun的运行id
         :param exp_name: str, 实验名称
         :param description: str, 实验描述
-        :param num: int, 历史实验数量
         :param colors: Tuple[str, str], 实验颜色，[light, dark]
         """
         pass
