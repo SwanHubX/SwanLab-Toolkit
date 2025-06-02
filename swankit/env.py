@@ -22,7 +22,7 @@ class SwanLabMode(Enum):
 
     DISABLED = "disabled"
     CLOUD = "cloud"
-    CLOUD_ONLY = "cloud-only"
+    BACKUP = "backup"
     LOCAL = "local"
 
     @classmethod
@@ -49,7 +49,7 @@ class SwanLabSharedEnv(Enum):
     """
     SWANLAB_MODE = "SWANLAB_MODE"
     """
-    swanlab的解析模式，涉及操作员注册的回调，目前有三种：local、cloud、disabled，默认为cloud
+    swanlab的解析模式，涉及操作员注册的回调，目前有四种：local、cloud、disabled 和 backup，默认为cloud
     大小写不敏感
     """
 
