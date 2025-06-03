@@ -28,7 +28,7 @@ def test_list_mode():
     assert len(ms) == 4
     assert "disabled" in ms
     assert "cloud" in ms
-    assert "cloud-only" in ms
+    assert "backup" in ms
     assert "local" in ms
 
 
