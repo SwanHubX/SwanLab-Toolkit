@@ -20,11 +20,12 @@ class SwanKitCallback(ABC):
     此处只定义会被调用的函数，用于接口规范
     """
 
-    def on_init(self, proj_name: str, workspace: str, logdir: str = None, *args, **kwargs):
+    def on_init(self, proj_name: str, workspace: str, public: bool = None, logdir: str = None, *args, **kwargs):
         """
         执行`swanlab.init`时调用，此时运行时环境变量没有被设置，此时修改环境变量还是有效的
         :param logdir: str, 用户设置的日志目录
         :param proj_name: str, 项目名称
+        :param public: bool, 是否为公开项目
         :param workspace: str, 工作空间
         :param kwargs: dict, 其他参数，为了增加灵活性，可以在on_init的时候设置一些其他类内参数
         """
