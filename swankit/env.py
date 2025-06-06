@@ -22,7 +22,7 @@ class SwanLabMode(Enum):
 
     DISABLED = "disabled"
     CLOUD = "cloud"
-    BACKUP = "backup"
+    OFFLINE = "offline"
     LOCAL = "local"
 
     @classmethod
@@ -107,8 +107,12 @@ def get_save_dir() -> str:
     if not os.path.exists(os.path.dirname(folder)):
         raise FileNotFoundError(f"{os.path.dirname(folder)} not found")
     if not os.path.exists(folder):
-        # 只创建当前文件夹，不创建父文件夹
-        os.mkdir(folder)
+        # 只创建当前文件夹，不创建父文件夹，之所以还要捕捉 FileExistsError，是因为在多线程或多进程环境下，可能会有多个线程或进程同时创建同一个文件夹
+        # 比如：https://github.com/SwanHubX/SwanLab/issues/1033
+        try:
+            os.mkdir(folder)
+        except FileExistsError:
+            pass
     if not os.path.isdir(folder):
         raise NotADirectoryError(f"{folder} is not a directory")
     return folder
