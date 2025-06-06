@@ -22,7 +22,7 @@ class SwanLabMode(Enum):
 
     DISABLED = "disabled"
     CLOUD = "cloud"
-    BACKUP = "backup"
+    OFFLINE = "offline"
     LOCAL = "local"
 
     @classmethod
