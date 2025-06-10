@@ -8,6 +8,8 @@ r"""
     swankit 为 swanlab 定制的配置类
 """
 import os
+import time
+from datetime import datetime
 from typing import Tuple, List, Optional
 
 
@@ -93,12 +95,27 @@ class SwanLabSharedSettings(LazySettings):
         LazySettings.__init__(self)
         # ---------------------------------- 静态信息 ----------------------------------
         self.__should_save = should_save
-        self.__run_id = run_id
         self.__version = version
+        self.__run_id = run_id
+        # ----------------------- 检测运行文件夹的创建，确保文件夹在当前进程唯一占有 ----------
+        run_dir = None
+        while True:
+            run_dir is not None and time.sleep(1)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            run_name = "run-{}-{}".format(timestamp, run_id)
+            run_dir = os.path.join(logdir, run_name)
+            if not should_save:
+                break
+            try:
+                os.mkdir(run_dir)
+                break
+            except FileExistsError:
+                pass
+        assert run_dir is not None, "run_dir should not be None, please check the logdir and run_id"
         # ---------------------------------- 文件夹信息 ----------------------------------
         self.__root_dir = os.path.dirname(logdir)
         self.__swanlog_dir = logdir
-        self.__run_dir = os.path.join(logdir, run_id)
+        self.__run_dir = run_dir
         self.__console_dir = os.path.join(self.run_dir, "console")
         self.__log_dir = os.path.join(self.run_dir, "logs")
         self.__files_dir = os.path.join(self.run_dir, "files")
