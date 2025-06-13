@@ -127,8 +127,11 @@ class SwanLabSharedSettings(LazySettings):
         """创建目录
         为了保证安全性，不会递归创建
         """
-        if not os.path.exists(path) and self.should_save:
-            os.mkdir(path)
+        try:
+            if not os.path.exists(path) and self.should_save:
+                os.mkdir(path)
+        except FileExistsError:  # https://github.com/SwanHubX/SwanLab/issues/1090
+            pass
 
     # ---------------------------------- 静态属性 ----------------------------------
 
